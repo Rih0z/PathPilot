@@ -8,18 +8,18 @@ vars = { ENVIRONMENT = "production", MONETIZATION_PHASE = "1", DEBUG_MODE = "fal
 
 [[kv_namespaces]]
 binding = "USER_CONTEXTS"
-id = "YOUR_USER_CONTEXTS_KV_ID"
-preview_id = "YOUR_USER_CONTEXTS_PREVIEW_ID"
+id = "8c7ae3b0e18b411d9c87d05d601d7655"
+preview_id = "ae5c11910b5548c392a84fb77abc22c9"
 
 [[kv_namespaces]]
 binding = "PROMPT_TEMPLATES"
-id = "YOUR_PROMPT_TEMPLATES_KV_ID"
-preview_id = "YOUR_PROMPT_TEMPLATES_PREVIEW_ID"
+id = "3833c68dfea749919c877bd7607ddc57"
+preview_id = "a6e894f8b7194f0087040240cb0bcd8e"
 
 [[kv_namespaces]]
 binding = "USAGE_ANALYTICS"
-id = "YOUR_USAGE_ANALYTICS_KV_ID"
-preview_id = "YOUR_USAGE_ANALYTICS_PREVIEW_ID"
+id = "827404d090834240b23411360891fc63"
+preview_id = "3af2eda022434ba3b71a49a6dfd849b6"
 
 [build]
 command = "npm run build"

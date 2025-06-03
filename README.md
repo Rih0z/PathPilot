@@ -20,12 +20,15 @@ PathPilotは、ユーザーの就職活動を包括的にサポートするAIプ
 
 ### Production URL
 ```
-https://pathpilot.workers.dev
+https://pathpilot.riho-dare.workers.dev
 ```
 
-### Staging URL
-```
-https://pathpilot-staging.workers.dev
+### API Status
+✅ **DEPLOYED & OPERATIONAL**
+
+Test the API:
+```bash
+curl https://pathpilot.riho-dare.workers.dev/
 ```
 
 ## 📦 Installation
