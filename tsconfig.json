@@ -29,7 +29,8 @@
       "@tests/*": ["src/tests/*"],
       "@components/*": ["src/components/*"],
       "@pages/*": ["src/pages/*"],
-      "@styles/*": ["src/styles/*"]
+      "@styles/*": ["src/styles/*"],
+      "@contexts/*": ["src/contexts/*"]
     },
     "types": ["@cloudflare/workers-types", "vitest/globals"]
   },

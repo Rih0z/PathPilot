@@ -13,6 +13,7 @@ export default defineConfig({
       '@styles': path.resolve(__dirname, './src/styles'),
       '@api': path.resolve(__dirname, './src/api'),
       '@shared': path.resolve(__dirname, './src/shared'),
+      '@contexts': path.resolve(__dirname, './src/contexts'),
     },
   },
   build: {

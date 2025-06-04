@@ -7,7 +7,9 @@ import {
   FaChartBar,
   FaArrowLeft,
   FaSpinner,
-  FaCopy
+  FaCopy,
+  FaDownload,
+  FaInfoCircle
 } from 'react-icons/fa'
 
 interface AppView {
@@ -15,9 +17,13 @@ interface AppView {
   name: string
 }
 
+interface MainAppProps {
+  onNavigateToImport?: () => void
+}
+
 const API_BASE = 'https://pathpilot.riho-dare.workers.dev'
 
-export const MainApp: React.FC = () => {
+export const MainApp: React.FC<MainAppProps> = ({ onNavigateToImport }) => {
   const [currentView, setCurrentView] = useState<string>('welcome')
   const [loading, setLoading] = useState<Record<string, boolean>>({})
   const [results, setResults] = useState<Record<string, any>>({})
@@ -153,6 +159,27 @@ export const MainApp: React.FC = () => {
                   <FaChartBar className="text-3xl mb-3 text-blue-900" />
                   <div className="text-lg font-semibold text-blue-900">統計情報を見る</div>
                 </button>
+              </div>
+
+              {/* データインポート案内 */}
+              <div className="mt-8 bg-gradient-to-r from-green-50 to-blue-50 p-6 rounded-2xl border border-green-200">
+                <div className="flex items-center gap-3 mb-3">
+                  <FaInfoCircle className="text-green-600 text-xl" />
+                  <h4 className="font-bold text-blue-900">より詳細な分析をお求めの方へ</h4>
+                </div>
+                <p className="text-gray-700 text-sm mb-4">
+                  AIツールを使用して現在の就活状況を詳しく分析し、あなた専用のダッシュボードを作成できます。
+                  スクリーンショットや詳細情報を元に、より個人化された支援を受けられます。
+                </p>
+                {onNavigateToImport && (
+                  <button
+                    onClick={onNavigateToImport}
+                    className="flex items-center gap-2 bg-green-600 text-white px-6 py-3 rounded-xl hover:bg-green-700 transition-colors font-semibold"
+                  >
+                    <FaDownload />
+                    データインポートで詳細分析
+                  </button>
+                )}
               </div>
             </div>
           )}
