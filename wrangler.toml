@@ -3,6 +3,11 @@ main = "dist/index.js"
 compatibility_date = "2024-01-01"
 compatibility_flags = ["nodejs_compat"]
 
+# Development environment
+[env.development]
+vars = { ENVIRONMENT = "development", MONETIZATION_PHASE = "1", DEBUG_MODE = "true" }
+
+# Production environment
 [env.production]
 vars = { ENVIRONMENT = "production", MONETIZATION_PHASE = "1", DEBUG_MODE = "false" }
 

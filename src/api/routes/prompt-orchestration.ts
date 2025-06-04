@@ -3,16 +3,17 @@ import { zValidator } from '@hono/zod-validator';
 import { z } from 'zod';
 import type { Env, User } from '../../shared/types';
 import { PromptOrchestrationEngine } from '../services/prompt-orchestration';
-import { bearerAuth } from '../middleware/auth';
+import { demoAuth } from '../middleware/optional-auth';
 
 type Variables = {
-  user: User;
+  user?: User;
+  isAuthenticated: boolean;
 };
 
 export const promptOrchestrationRoutes = new Hono<{ Bindings: Env; Variables: Variables }>();
 
-// Apply authentication middleware to all routes
-promptOrchestrationRoutes.use('*', bearerAuth);
+// Apply demo/optional authentication middleware to all routes
+promptOrchestrationRoutes.use('*', demoAuth);
 
 // Schema validations
 const generatePromptSchema = z.object({

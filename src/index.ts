@@ -6,6 +6,8 @@ import { authRoutes } from './api/routes/auth';
 import { successPatternRoutes } from './api/routes/success-patterns';
 import { promptOrchestrationRoutes } from './api/routes/prompt-orchestration';
 import { hopeGenerationRoutes } from './api/routes/hope-generation';
+import { adminRoutes } from './api/routes/admin';
+import { publicRoutes } from './api/routes/public';
 
 const app = new Hono<{ Bindings: Env }>();
 
@@ -37,6 +39,8 @@ app.route('/api/auth', authRoutes);
 app.route('/api/success-patterns', successPatternRoutes);
 app.route('/api/prompts', promptOrchestrationRoutes);
 app.route('/api/hope', hopeGenerationRoutes);
+app.route('/api/admin', adminRoutes);
+app.route('/api/public', publicRoutes);
 
 // 404 handler
 app.notFound((c) => {

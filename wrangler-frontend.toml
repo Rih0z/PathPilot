@@ -1,0 +1,9 @@
+name = "pathpilot-frontend"
+compatibility_date = "2024-01-01"
+pages_build_output_dir = "dist"
+
+[build]
+command = "npm run build:frontend"
+
+[vars]
+REACT_APP_API_BASE = "https://pathpilot.riho-dare.workers.dev"

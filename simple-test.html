@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PathPilot Simple Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%);
+            color: white;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .container {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 40px;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+        }
+        h1 {
+            font-size: 3em;
+            margin-bottom: 20px;
+        }
+        p {
+            font-size: 1.2em;
+            margin-bottom: 30px;
+        }
+        .btn {
+            background: #ff8c42;
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.1em;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s ease;
+        }
+        .btn:hover {
+            background: #e67e2e;
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🚀 PathPilot</h1>
+        <p>AI就活パイロット - シンプルテスト</p>
+        <p>このページが表示されれば、Cloudflare Workersの基本的な配信は動作しています。</p>
+        <button class="btn" onclick="testReact()">React版をテスト</button>
+        <div id="status" style="margin-top: 20px;"></div>
+    </div>
+
+    <script>
+        function testReact() {
+            const status = document.getElementById('status');
+            status.innerHTML = 'React版を読み込み中...';
+            
+            // Try to load React assets
+            fetch('/assets/index-3bf37aed.js')
+                .then(response => {
+                    if (response.ok) {
+                        status.innerHTML = '✅ JavaScript アセットは正常に読み込めました<br>問題はReactの初期化にある可能性があります';
+                    } else {
+                        status.innerHTML = '❌ JavaScript アセットが読み込めません: ' + response.status;
+                    }
+                })
+                .catch(error => {
+                    status.innerHTML = '❌ ネットワークエラー: ' + error.message;
+                });
+        }
+        
+        // Auto test on load
+        window.onload = function() {
+            testReact();
+        };
+    </script>
+</body>
+</html>

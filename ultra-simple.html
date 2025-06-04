@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PathPilot - AI就活パイロット</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 50%, #2563eb 100%);
+            min-height: 100vh;
+            color: white;
+            overflow-x: hidden;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        /* Header */
+        .header {
+            text-align: center;
+            padding: 60px 0;
+        }
+        
+        .logo {
+            font-size: 3.5rem;
+            font-weight: 900;
+            margin-bottom: 20px;
+            background: linear-gradient(45deg, #ffffff, #fbbf24, #ff8c42);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .tagline {
+            font-size: 1.5rem;
+            margin-bottom: 40px;
+            opacity: 0.9;
+        }
+        
+        /* Buttons */
+        .btn {
+            display: inline-block;
+            padding: 15px 30px;
+            margin: 10px;
+            border: none;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(45deg, #ff8c42, #fbbf24);
+            color: white;
+            box-shadow: 0 8px 25px rgba(255, 140, 66, 0.3);
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 35px rgba(255, 140, 66, 0.4);
+        }
+        
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+        
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+        
+        /* Features */
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin: 80px 0;
+        }
+        
+        .feature {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 30px;
+            border-radius: 20px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+        
+        .feature:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.15);
+        }
+        
+        .feature-icon {
+            width: 60px;
+            height: 60px;
+            background: rgba(251, 191, 36, 0.2);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            font-size: 1.8rem;
+        }
+        
+        .feature h3 {
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+        
+        .feature p {
+            opacity: 0.9;
+            line-height: 1.7;
+        }
+        
+        /* Stats */
+        .stats {
+            text-align: center;
+            margin: 60px 0;
+            padding: 40px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            margin-top: 30px;
+        }
+        
+        .stat {
+            text-align: center;
+        }
+        
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 900;
+            color: #fbbf24;
+            display: block;
+        }
+        
+        .stat-label {
+            font-size: 1rem;
+            opacity: 0.8;
+            margin-top: 5px;
+        }
+        
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 40px 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            margin-top: 60px;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .logo { font-size: 2.5rem; }
+            .tagline { font-size: 1.2rem; }
+            .container { padding: 15px; }
+            .header { padding: 40px 0; }
+        }
+        
+        /* Loading animation */
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <h1 class="logo">🚀 PathPilot</h1>
+            <p class="tagline">AI就活パイロット - あなたの就職活動を成功に導く</p>
+            <div>
+                <button class="btn btn-primary" onclick="startJourney()">今すぐ始める</button>
+                <button class="btn btn-secondary" onclick="showDemo()">デモを見る</button>
+            </div>
+        </header>
+        
+        <!-- Features -->
+        <section class="features">
+            <div class="feature">
+                <div class="feature-icon">💡</div>
+                <h3>希望体験生成</h3>
+                <p>「もしかしたら内定をもらえるかも」という希望を具体的な体験として提供し、モチベーションを維持します。</p>
+            </div>
+            
+            <div class="feature">
+                <div class="feature-icon">⚡</div>
+                <h3>成功パターンマッチング</h3>
+                <p>過去の成功事例を分析し、あなたに最適な就活戦略とアクションプランを提案します。</p>
+            </div>
+            
+            <div class="feature">
+                <div class="feature-icon">🎯</div>
+                <h3>パーソナライズプロンプト</h3>
+                <p>あなたの性格、スキル、目標に合わせて最適化されたAIプロンプトを自動生成します。</p>
+            </div>
+        </section>
+        
+        <!-- Stats -->
+        <section class="stats">
+            <h2>PathPilotの実績</h2>
+            <div class="stats-grid">
+                <div class="stat">
+                    <span class="stat-number">95%</span>
+                    <div class="stat-label">利用者満足度</div>
+                </div>
+                <div class="stat">
+                    <span class="stat-number">3.2倍</span>
+                    <div class="stat-label">内定取得率向上</div>
+                </div>
+                <div class="stat">
+                    <span class="stat-number">10,000+</span>
+                    <div class="stat-label">成功パターン学習</div>
+                </div>
+                <div class="stat">
+                    <span class="stat-number">24/7</span>
+                    <div class="stat-label">AIサポート</div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Call to Action -->
+        <section class="header">
+            <h2>あなたの就活を変革しませんか？</h2>
+            <p class="tagline">PathPilotと一緒に、理想のキャリアを実現しましょう</p>
+            <button class="btn btn-primary" onclick="startJourney()">無料で始める</button>
+        </section>
+        
+        <!-- Footer -->
+        <footer class="footer">
+            <p>&copy; 2024 PathPilot. すべての権利を保有します。</p>
+            <p>🤖 Generated with Claude Code | 🚀 Powered by AI</p>
+        </footer>
+    </div>
+    
+    <script>
+        console.log('🚀 PathPilot Ultra Simple Version Loaded Successfully!');
+        
+        function startJourney() {
+            // For now, show an alert
+            alert('🎉 PathPilotへようこそ！\n\nこの超シンプル版では、基本的な機能をご確認いただけます。\n\n実際のサービスでは以下が利用可能です：\n\n✅ AI希望体験生成\n✅ 成功パターンマッチング\n✅ パーソナライズプロンプト\n✅ 24/7 AIサポート\n\n今後の開発をお楽しみに！');
+        }
+        
+        function showDemo() {
+            alert('📱 デモ機能\n\n以下の機能のデモをご覧いただけます：\n\n1. 希望体験シミュレーション\n2. 成功確率計算\n3. カスタムプロンプト生成\n4. 進捗トラッキング\n\n完全版では実際にこれらの機能をご利用いただけます！');
+        }
+        
+        // Add some interactive effects
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add hover effects to features
+            const features = document.querySelectorAll('.feature');
+            features.forEach(feature => {
+                feature.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-8px) scale(1.02)';
+                });
+                
+                feature.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(0) scale(1)';
+                });
+            });
+            
+            // Animate stats on scroll
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const numbers = entry.target.querySelectorAll('.stat-number');
+                        numbers.forEach(number => {
+                            number.classList.add('pulse');
+                        });
+                    }
+                });
+            });
+            
+            const statsSection = document.querySelector('.stats');
+            if (statsSection) {
+                observer.observe(statsSection);
+            }
+        });
+        
+        // Error handling
+        window.addEventListener('error', function(event) {
+            console.error('Page Error:', event.error);
+            // Don't show error for this simple version
+        });
+        
+        window.addEventListener('unhandledrejection', function(event) {
+            console.error('Unhandled Promise Rejection:', event.reason);
+            // Don't show error for this simple version
+        });
+    </script>
+</body>
+</html>

@@ -3,16 +3,17 @@ import { zValidator } from '@hono/zod-validator';
 import { z } from 'zod';
 import type { Env, User } from '../../shared/types';
 import { SuccessPatternEngine } from '../services/success-pattern';
-import { bearerAuth } from '../middleware/auth';
+import { demoAuth } from '../middleware/optional-auth';
 
 type Variables = {
-  user: User;
+  user?: User;
+  isAuthenticated: boolean;
 };
 
 export const successPatternRoutes = new Hono<{ Bindings: Env; Variables: Variables }>();
 
-// Apply authentication middleware to all routes
-successPatternRoutes.use('*', bearerAuth);
+// Apply demo/optional authentication middleware to all routes
+successPatternRoutes.use('*', demoAuth);
 
 // Schema validations
 const completedActionSchema = z.object({

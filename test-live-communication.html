@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PathPilot - Live Communication Test</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 50%, #2563eb 100%);
+            min-height: 100vh;
+            color: white;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .logo {
+            font-size: 2.5rem;
+            font-weight: 900;
+            margin-bottom: 10px;
+            background: linear-gradient(45deg, #ffffff, #fbbf24, #ff8c42);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .test-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .test-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 30px;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .status {
+            padding: 10px;
+            border-radius: 8px;
+            margin: 10px 0;
+            font-size: 0.9rem;
+        }
+        
+        .status.success {
+            background: rgba(34, 197, 94, 0.2);
+            border: 1px solid rgba(34, 197, 94, 0.5);
+            color: #22c55e;
+        }
+        
+        .status.error {
+            background: rgba(239, 68, 68, 0.2);
+            border: 1px solid rgba(239, 68, 68, 0.5);
+            color: #ef4444;
+        }
+        
+        .status.loading {
+            background: rgba(59, 130, 246, 0.2);
+            border: 1px solid rgba(59, 130, 246, 0.5);
+            color: #3b82f6;
+        }
+        
+        .btn {
+            background: linear-gradient(45deg, #ff8c42, #fbbf24);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            margin: 10px 0;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(255, 140, 66, 0.3);
+        }
+        
+        .result {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 10px;
+            font-family: monospace;
+            font-size: 0.8rem;
+            white-space: pre-wrap;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+        
+        .urls {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        
+        .urls h3 {
+            margin-bottom: 10px;
+            color: #fbbf24;
+        }
+        
+        .urls p {
+            font-family: monospace;
+            margin: 5px 0;
+            color: #e0e7ff;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1 class="logo">🔌 Live Communication Test</h1>
+            <p>フロントエンド ↔ バックエンド リアルタイム通信テスト</p>
+        </div>
+        
+        <div class="urls">
+            <h3>🌐 現在のURL設定</h3>
+            <p>Frontend: https://pathpilot-frontend.riho-dare.workers.dev</p>
+            <p>Backend: https://pathpilot.riho-dare.workers.dev</p>
+        </div>
+        
+        <div class="test-grid">
+            <!-- Basic Connection -->
+            <div class="test-card">
+                <h3>🌐 基本接続テスト</h3>
+                <div id="basic-status" class="status loading">待機中...</div>
+                <button class="btn" onclick="testBasicConnection()">テスト実行</button>
+                <div id="basic-result" class="result" style="display: none;"></div>
+            </div>
+            
+            <!-- Public API Demo Info -->
+            <div class="test-card">
+                <h3>📋 パブリックAPIデモ情報</h3>
+                <div id="demo-info-status" class="status loading">待機中...</div>
+                <button class="btn" onclick="testDemoInfo()">テスト実行</button>
+                <div id="demo-info-result" class="result" style="display: none;"></div>
+            </div>
+            
+            <!-- Hope Experience -->
+            <div class="test-card">
+                <h3>💡 希望体験生成（認証不要）</h3>
+                <div id="hope-status" class="status loading">待機中...</div>
+                <button class="btn" onclick="testHopeExperience()">テスト実行</button>
+                <div id="hope-result" class="result" style="display: none;"></div>
+            </div>
+            
+            <!-- Success Patterns -->
+            <div class="test-card">
+                <h3>⚡ 成功パターン（認証不要）</h3>
+                <div id="success-status" class="status loading">待機中...</div>
+                <button class="btn" onclick="testSuccessPatterns()">テスト実行</button>
+                <div id="success-result" class="result" style="display: none;"></div>
+            </div>
+            
+            <!-- Prompt Generation -->
+            <div class="test-card">
+                <h3>🎯 プロンプト生成（認証不要）</h3>
+                <div id="prompt-status" class="status loading">待機中...</div>
+                <button class="btn" onclick="testPromptGeneration()">テスト実行</button>
+                <div id="prompt-result" class="result" style="display: none;"></div>
+            </div>
+            
+            <!-- Demo Stats Test -->
+            <div class="test-card">
+                <h3>📊 統計APIテスト</h3>
+                <div id="demo-mode-status" class="status loading">待機中...</div>
+                <button class="btn" onclick="testDemoMode()">テスト実行</button>
+                <div id="demo-mode-result" class="result" style="display: none;"></div>
+            </div>
+        </div>
+        
+        <!-- Overall Status -->
+        <div class="test-card">
+            <h2>📊 通信テスト結果サマリー</h2>
+            <div id="summary-status" class="status loading">
+                テストを実行してください...
+            </div>
+            <button class="btn" onclick="runAllTests()" style="background: linear-gradient(45deg, #2563eb, #1e40af);">
+                🚀 全テストを一括実行
+            </button>
+        </div>
+    </div>
+    
+    <script>
+        const API_BASE = 'https://pathpilot.riho-dare.workers.dev';
+        const FRONTEND_URL = 'https://pathpilot-frontend.riho-dare.workers.dev';
+        
+        let testResults = {
+            basic: null,
+            demoInfo: null,
+            hope: null,
+            success: null,
+            prompt: null,
+            demoMode: null
+        };
+        
+        async function testBasicConnection() {
+            updateStatus('basic', 'loading', 'バックエンドに接続中...');
+            
+            try {
+                const response = await fetch(`${API_BASE}/`);
+                const data = await response.json();
+                
+                if (response.ok && data.status === 'operational') {
+                    testResults.basic = true;
+                    updateStatus('basic', 'success', `✅ 接続成功！ (v${data.version})`);
+                    updateResult('basic', JSON.stringify(data, null, 2));
+                } else {
+                    testResults.basic = false;
+                    updateStatus('basic', 'error', '❌ 接続失敗');
+                    updateResult('basic', JSON.stringify(data, null, 2));
+                }
+            } catch (error) {
+                testResults.basic = false;
+                updateStatus('basic', 'error', `❌ エラー: ${error.message}`);
+                updateResult('basic', error.stack);
+            }
+            
+            updateSummary();
+        }
+        
+        async function testDemoInfo() {
+            updateStatus('demo-info', 'loading', 'デモ情報を取得中...');
+            
+            try {
+                const response = await fetch(`${API_BASE}/api/public/demo/info`);
+                const data = await response.json();
+                
+                if (response.ok && data.success) {
+                    testResults.demoInfo = true;
+                    updateStatus('demo-info', 'success', '✅ デモ情報取得成功！');
+                    updateResult('demo-info', JSON.stringify(data, null, 2));
+                } else {
+                    testResults.demoInfo = false;
+                    updateStatus('demo-info', 'error', '❌ デモ情報取得失敗');
+                    updateResult('demo-info', JSON.stringify(data, null, 2));
+                }
+            } catch (error) {
+                testResults.demoInfo = false;
+                updateStatus('demo-info', 'error', `❌ エラー: ${error.message}`);
+                updateResult('demo-info', error.stack);
+            }
+            
+            updateSummary();
+        }
+        
+        async function testHopeExperience() {
+            updateStatus('hope', 'loading', '希望体験を生成中...');
+            
+            try {
+                const response = await fetch(`${API_BASE}/api/public/demo/hope-experience`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+                const data = await response.json();
+                
+                if (response.ok && data.success) {
+                    testResults.hope = true;
+                    updateStatus('hope', 'success', '✅ 希望体験生成成功！');
+                    updateResult('hope', JSON.stringify(data, null, 2));
+                } else {
+                    testResults.hope = false;
+                    updateStatus('hope', 'error', '❌ 希望体験生成失敗');
+                    updateResult('hope', JSON.stringify(data, null, 2));
+                }
+            } catch (error) {
+                testResults.hope = false;
+                updateStatus('hope', 'error', `❌ エラー: ${error.message}`);
+                updateResult('hope', error.stack);
+            }
+            
+            updateSummary();
+        }
+        
+        async function testSuccessPatterns() {
+            updateStatus('success', 'loading', '成功パターンを取得中...');
+            
+            try {
+                const response = await fetch(`${API_BASE}/api/public/demo/success-patterns`);
+                const data = await response.json();
+                
+                if (response.ok && data.success) {
+                    testResults.success = true;
+                    updateStatus('success', 'success', '✅ 成功パターン取得成功！');
+                    updateResult('success', JSON.stringify(data, null, 2));
+                } else {
+                    testResults.success = false;
+                    updateStatus('success', 'error', '❌ 成功パターン取得失敗');
+                    updateResult('success', JSON.stringify(data, null, 2));
+                }
+            } catch (error) {
+                testResults.success = false;
+                updateStatus('success', 'error', `❌ エラー: ${error.message}`);
+                updateResult('success', error.stack);
+            }
+            
+            updateSummary();
+        }
+        
+        async function testPromptGeneration() {
+            updateStatus('prompt', 'loading', 'プロンプトを生成中...');
+            
+            try {
+                const response = await fetch(`${API_BASE}/api/public/demo/prompt`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+                const data = await response.json();
+                
+                if (response.ok && data.success) {
+                    testResults.prompt = true;
+                    updateStatus('prompt', 'success', '✅ プロンプト生成成功！');
+                    updateResult('prompt', JSON.stringify(data, null, 2));
+                } else {
+                    testResults.prompt = false;
+                    updateStatus('prompt', 'error', '❌ プロンプト生成失敗');
+                    updateResult('prompt', JSON.stringify(data, null, 2));
+                }
+            } catch (error) {
+                testResults.prompt = false;
+                updateStatus('prompt', 'error', `❌ エラー: ${error.message}`);
+                updateResult('prompt', error.stack);
+            }
+            
+            updateSummary();
+        }
+        
+        async function testDemoMode() {
+            updateStatus('demo-mode', 'loading', 'パブリック統計APIをテスト中...');
+            
+            try {
+                const response = await fetch(`${API_BASE}/api/public/demo/stats`);
+                const data = await response.json();
+                
+                if (response.ok && data.success) {
+                    testResults.demoMode = true;
+                    updateStatus('demo-mode', 'success', '✅ 統計API動作確認！');
+                    updateResult('demo-mode', JSON.stringify(data, null, 2));
+                } else {
+                    testResults.demoMode = false;
+                    updateStatus('demo-mode', 'error', '❌ 統計API失敗');
+                    updateResult('demo-mode', JSON.stringify(data, null, 2));
+                }
+            } catch (error) {
+                testResults.demoMode = false;
+                updateStatus('demo-mode', 'error', `❌ エラー: ${error.message}`);
+                updateResult('demo-mode', error.stack);
+            }
+            
+            updateSummary();
+        }
+        
+        async function runAllTests() {
+            updateStatus('summary', 'loading', '全テストを実行中...');
+            
+            await testBasicConnection();
+            await delay(500);
+            await testDemoInfo();
+            await delay(500);
+            await testHopeExperience();
+            await delay(500);
+            await testSuccessPatterns();
+            await delay(500);
+            await testPromptGeneration();
+            await delay(500);
+            await testDemoMode();
+        }
+        
+        function updateStatus(id, type, message) {
+            const element = document.getElementById(`${id}-status`);
+            element.className = `status ${type}`;
+            element.textContent = message;
+        }
+        
+        function updateResult(id, content) {
+            const element = document.getElementById(`${id}-result`);
+            element.style.display = 'block';
+            element.textContent = content;
+        }
+        
+        function updateSummary() {
+            const total = Object.keys(testResults).length;
+            const passed = Object.values(testResults).filter(r => r === true).length;
+            const failed = Object.values(testResults).filter(r => r === false).length;
+            const pending = total - passed - failed;
+            
+            let status, message;
+            
+            if (pending > 0) {
+                status = 'loading';
+                message = `テスト中... (成功: ${passed}, 失敗: ${failed}, 未実行: ${pending})`;
+            } else if (failed === 0) {
+                status = 'success';
+                message = `✅ 全テスト成功！ (${passed}/${total}) - フロントエンドとバックエンドの通信は完璧です！`;
+            } else if (passed > failed) {
+                status = 'error';
+                message = `⚠️ 一部失敗 (成功: ${passed}, 失敗: ${failed}) - 部分的に通信可能`;
+            } else {
+                status = 'error';
+                message = `❌ 通信エラー (成功: ${passed}, 失敗: ${failed}) - 重大な問題があります`;
+            }
+            
+            updateStatus('summary', status, message);
+        }
+        
+        function delay(ms) {
+            return new Promise(resolve => setTimeout(resolve, ms));
+        }
+        
+        // Auto-run basic test on load
+        setTimeout(testBasicConnection, 1000);
+    </script>
+</body>
+</html>

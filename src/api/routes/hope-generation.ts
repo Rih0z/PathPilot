@@ -3,16 +3,17 @@ import { zValidator } from '@hono/zod-validator';
 import { z } from 'zod';
 import type { Env, User } from '../../shared/types';
 import { HopeGenerationEngine } from '../services/hope-generation';
-import { bearerAuth } from '../middleware/auth';
+import { demoAuth } from '../middleware/optional-auth';
 
 type Variables = {
-  user: User;
+  user?: User;
+  isAuthenticated: boolean;
 };
 
 export const hopeGenerationRoutes = new Hono<{ Bindings: Env; Variables: Variables }>();
 
-// Apply authentication middleware to all routes
-hopeGenerationRoutes.use('*', bearerAuth);
+// Apply demo/optional authentication middleware to all routes
+hopeGenerationRoutes.use('*', demoAuth);
 
 // Schema validations
 const visualizationSchema = z.object({
@@ -34,8 +35,20 @@ const hopeScoreSchema = z.object({
 
 // Generate hope experience
 hopeGenerationRoutes.post('/experience', async (c) => {
-  const user = c.get('user') as User;
+  const user = c.get('user');
+  const isAuthenticated = c.get('isAuthenticated');
   const engine = new HopeGenerationEngine(c.env);
+  
+  if (!user) {
+    return c.json({
+      success: false,
+      error: {
+        code: 'USER_NOT_FOUND',
+        message: 'User not found'
+      },
+      timestamp: new Date().toISOString()
+    }, 404);
+  }
   
   const result = await engine.generateHopeExperience(user.id);
   
