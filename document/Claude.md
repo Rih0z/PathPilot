@@ -15,8 +15,8 @@
 
 ### 3. ドキュメント更新
 - [ ] READMEにデプロイ先を記載して
-- [ ] デプロイURL: 
-  - Frontend: https://pathpilot-frontend.riho-dare.workers.dev
+- [x] デプロイURL: 
+  - Frontend: https://b20641ca.pathpilot-frontend.pages.dev
   - Backend: https://pathpilot.riho-dare.workers.dev
 - [ ] 実装を変更したらそれに合わせてドキュメントも更新すること
 
@@ -29,8 +29,8 @@
 ### 5. URL固定要件
 - [ ] 必ずURLが固定の本番環境にデプロイするようにして
 - [ ] フロントエンドとバックエンドの通信が必ず成功するように固定のAPIを指定して
-- [ ] 固定URL:
-  - Frontend: https://pathpilot-frontend.riho-dare.workers.dev
+- [x] 固定URL:
+  - Frontend: https://b20641ca.pathpilot-frontend.pages.dev
   - Backend API: https://pathpilot.riho-dare.workers.dev
 
 ## 開発フロー
@@ -47,7 +47,7 @@
 
 ### 固定エンドポイント
 - Backend API Base: `https://pathpilot.riho-dare.workers.dev`
-- Frontend Origin: `https://pathpilot-frontend.riho-dare.workers.dev`
+- Frontend Origin: `https://b20641ca.pathpilot-frontend.pages.dev`
 
 ### 認証不要のパブリックAPI
 - `GET /api/public/demo/info` - デモ情報
@@ -80,21 +80,25 @@ Ultrathink: 「絵文字は一切使用せず、アイコンライブラリ（re
 - 🎨 現代的なUIデザイン（Tailwind CSS、グラデーション、アニメーション）
 - 🔧 Cloudflare Pages でデプロイ完了
 
-新デプロイURL：
-- **React Frontend**: https://3c74469e.pathpilot-frontend.pages.dev
-- **旧React Frontend**: https://ef2dc79a.pathpilot-frontend.pages.dev
+新デプロイURL（UI/UX仕様書v2.0準拠）：
+- **React Frontend**: https://b20641ca.pathpilot-frontend.pages.dev
+- **旧React Frontend**: https://3c74469e.pathpilot-frontend.pages.dev
 - **Backend API**: https://pathpilot.riho-dare.workers.dev （変更なし）
 
-置換されたアイコン：
-- 🚀 → FaRocket （ロゴ・ナビゲーション）
-- 💡 → FaLightbulb （希望体験生成）
-- ⚡ → FaBolt （成功パターンマッチング）
-- 🎯 → FaBullseye （パーソナライズプロンプト）
-- 📊 → FaChartBar （統計情報）
-- ✅ → FaCheckCircle （機能紹介）
-- ← → FaArrowLeft （戻るボタン）
-- 📋 → FaCopy （コピーボタン）
-- 回転中 → FaSpinner （ローディング）
+使用アイコン（Lucide React）：
+- Sparkles （ロゴ・ナビゲーション）
+- GraduationCap （学生）
+- UserCheck （新卒・プロフィール）
+- Briefcase （転職者）
+- Heart （希望体験・希望度）
+- Target （目標・統計）
+- TrendingUp （成長・向上）
+- Brain （AI分析・自己分析）
+- Camera （スクリーンショット）
+- RefreshCw （更新）
+- CheckCircle （完了・成果）
+- ChevronRight （ナビゲーション）
+- Smile/Frown （感情レベル）
 
 ## 🚀 新機能: データインポート
 

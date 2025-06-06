@@ -1,164 +1,285 @@
-// User and Authentication Types
-export interface User {
-  id: string;
-  email: string;
-  profile: UserProfile;
-  contexts: UserContext;
-  subscription: UserSubscription;
-  created_at: string;
-  updated_at: string;
-}
+// PathPilot UI/UX完全実装仕様書準拠の型定義
 
-export interface UserProfile {
-  name: string;
-  current_role: string;
-  experience_years: number;
-  target_role: string;
-  target_industry: string;
-  skills?: string[];
-  education?: string;
-}
+// ユーザータイプ
+export type UserType = 'student' | 'newgrad' | 'career' | '';
 
+// ビュータイプ
+export type ViewType = 'userType' | 'onboarding' | 'dashboard';
+
+// ユーザーコンテキスト
 export interface UserContext {
-  emotional_state: EmotionalState;
-  goals: CareerGoals;
-  preferences?: UserPreferences;
+  // 共通フィールド
+  targetJob: string;
+  targetSalary: string;
+  stressLevel: number; // 1-5
+  emotionalState: string;
+  
+  // 学生・新卒用フィールド
+  university: string;
+  major: string;
+  graduationYear: string;
+  internExperience: string;
+  
+  // 転職者用フィールド
+  currentJob: string;
+  experience: string;
 }
 
-export interface EmotionalState {
-  stress_level: number; // 0-1
-  motivation_level: 'low' | 'medium' | 'high';
-  confidence_level: number; // 0-1
-  last_updated: string;
+// 応募データ
+export interface Application {
+  id: number;
+  company: string;
+  position: string;
+  stage: number; // 1-5
+  nextAction: string;
+  urgency: 'high' | 'medium' | 'low';
+  probability: number; // 0-100
+  type: 'newgrad' | 'career';
 }
 
-export interface CareerGoals {
-  target_salary: number;
-  location_preference: string;
-  work_style: 'office' | 'remote' | 'hybrid';
-  timeline: string;
+// グローバル状態
+export interface GlobalState {
+  currentView: ViewType;
+  userType: UserType;
+  userContext: UserContext;
+  applicationData: Application[];
+  hopeScore: number;
+  loading: boolean;
+  activeCompany: Application | null;
+  generatedPrompt: string;
 }
 
-export interface UserPreferences {
-  communication_style: 'encouraging' | 'professional' | 'direct';
-  prompt_length: 'short' | 'medium' | 'long';
-  feedback_type: 'gentle' | 'honest' | 'detailed';
-  privacy_level: 'open' | 'private';
-}
+// テキストコンテンツ仕様
 
-export interface UserSubscription {
-  tier: 'free' | 'premium';
-  phase: '1' | '2' | '3';
-  usage_limits: UsageLimits;
-  expires_at?: string;
-}
-
-export interface UsageLimits {
-  daily_prompts: number;
-  daily_recommendations: number;
-  monthly_applications: number;
-  ai_analysis_credits: number;
-}
-
-// API Response Types
-export interface APIResponse<T = any> {
-  success: boolean;
-  data?: T;
-  error?: APIError;
-  timestamp: string;
-}
-
-export interface APIError {
-  code: string;
-  message: string;
-  details?: Record<string, any>;
-}
-
-// Hope Generation Types
-export interface HopeExperience {
-  hope_statement: string;
-  success_probability: string;
-  similar_success_story: SimilarityMatch;
-  next_action: Action;
-  evidence_preview: string;
-  confidence_boost_expected: number;
-}
-
-export interface SimilarityMatch {
-  id: string;
-  similarity_score: number;
-  key_similarities: string[];
-  success_path: SuccessPath;
-  concrete_outcomes: ConcreteOutcomes;
-}
-
-export interface SuccessPath {
-  key_actions: string[];
-  timeline: string;
-  obstacles_overcome: string[];
-  critical_moments: string[];
-}
-
-export interface ConcreteOutcomes {
-  offer_received: boolean;
-  salary_achieved: number;
-  timeline_to_offer: number;
-  company_name: string;
-}
-
-export interface Action {
-  id: string;
-  description: string;
-  priority: 'low' | 'medium' | 'high';
-  estimated_time: string;
-  expected_impact: string;
-}
-
-// Form Types for With-style questionnaire
-export interface OnboardingStep {
-  id: string;
+// ユーザータイプ選択画面のテキスト
+export interface UserTypeTexts {
   title: string;
-  subtitle?: string;
-  question: string;
-  type: 'single-select' | 'multi-select' | 'text' | 'slider' | 'card-select' | 'image-select';
-  options?: QuestionOption[];
-  validation?: ValidationRule;
-  psychological_trigger: 'curiosity' | 'social_proof' | 'commitment' | 'reciprocity' | 'authority';
-  progress_weight: number; // for calculating progress
+  subtitle: string;
+  cards: {
+    student: {
+      title: string;
+      description: string;
+      hoverText: string;
+    };
+    newgrad: {
+      title: string;
+      description: string;
+      hoverText: string;
+    };
+    career: {
+      title: string;
+      description: string;
+      hoverText: string;
+    };
+  };
 }
 
-export interface QuestionOption {
-  id: string;
-  label: string;
-  description?: string;
-  icon?: string;
-  image?: string;
-  color?: string;
-  value: any;
-  psychological_appeal: 'aspiration' | 'safety' | 'status' | 'growth' | 'belonging';
+// オンボーディング画面のテキスト
+export interface OnboardingTexts {
+  backButton: string;
+  title: {
+    student: string;
+    newgrad: string;
+    career: string;
+  };
+  subtitle: string;
+  subsubtitle: string;
+  labels: {
+    university: string;
+    major: string;
+    graduationYear: string;
+    internExperience: string;
+    currentJob: string;
+    experience: string;
+    targetJob: string;
+    targetSalary: {
+      career: string;
+      student: string;
+    };
+    stressLevel: {
+      career: string;
+      student: string;
+    };
+    emotionalState: string;
+  };
+  placeholders: {
+    university: string;
+    major: string;
+    graduationYear: string;
+    internExperience: string;
+    currentJob: string;
+    experience: string;
+    targetJob: {
+      career: string;
+      student: string;
+    };
+    targetSalary: {
+      career: string;
+      student: string;
+    };
+    emotionalState: {
+      career: string;
+      student: string;
+    };
+  };
+  stressLevelText: string[];
+  submitButton: string;
 }
 
-export interface ValidationRule {
-  required?: boolean;
-  min_length?: number;
-  max_length?: number;
-  min_value?: number;
-  max_value?: number;
-  pattern?: string;
-  custom_message?: string;
+// ダッシュボード画面のテキスト
+export interface DashboardTexts {
+  header: {
+    title: string;
+    badge: {
+      student: string;
+      newgrad: string;
+      career: string;
+    };
+    hopeLabel: {
+      career: string;
+      student: string;
+    };
+    profileEditTooltip: string;
+  };
+  hopeSection: {
+    title: {
+      career: string;
+      student: string;
+    };
+    refreshButton: string;
+    progressText: string[];
+    statsCards: {
+      applications: {
+        title: {
+          career: string;
+          student: string;
+        };
+        subtitle: {
+          career: string;
+          student: string;
+        };
+      };
+      successRate: {
+        title: string;
+        subtitle: string;
+      };
+      target: {
+        title: {
+          career: string;
+          student: string;
+        };
+        subtitle: string;
+      };
+    };
+  };
+  pilotAdvice: {
+    title: string;
+    urgentAction: {
+      title: string;
+      careerText: string;
+      studentText: string;
+      stressHighText: {
+        career: string;
+        student: string;
+      };
+      button: {
+        career: string;
+        student: string;
+      };
+    };
+    improvement: {
+      title: string;
+      text: string;
+    };
+    selfAnalysis: {
+      title: string;
+      text: string;
+      button: string;
+    };
+  };
+  pipeline: {
+    title: {
+      career: string;
+      student: string;
+    };
+    stageText: {
+      career: string;
+      student: string;
+    };
+    urgencyBadge: {
+      high: string;
+      medium: string;
+    };
+    nextActionPrefix: string;
+    actionButton: string;
+    addButton: {
+      career: string;
+      student: string;
+    };
+  };
+  promptGenerator: {
+    title: string;
+    buttons: {
+      screenshot: {
+        title: string;
+        subtitle: string;
+      };
+      hope: {
+        title: string;
+        subtitle: string;
+      };
+      selfAnalysis: {
+        title: string;
+        subtitle: string;
+      };
+      hopeCareer: {
+        title: string;
+        subtitle: string;
+      };
+    };
+    loading: string;
+    executeButton: string;
+    copyButton: string;
+  };
+  successPath: {
+    title: {
+      career: string;
+      student: string;
+    };
+    stages: Array<{
+      career: string;
+      student: string;
+      status: string[];
+    }>;
+  };
 }
 
-export interface OnboardingResponse {
-  step_id: string;
-  answer: any;
-  timestamp: string;
-  time_spent: number; // milliseconds
+// プロンプトテンプレート
+export interface PromptTemplates {
+  interview: {
+    student: string;
+    career: string;
+  };
+  hope: {
+    student: string;
+    career: string;
+  };
+  selfAnalysis: string;
+  analysis: string;
 }
 
-// Component Props Types
+// バリデーション
+export type FieldValidators = {
+  targetSalary: (value: string) => boolean;
+  graduationYear: (value: string) => boolean;
+  experience: (value: string) => boolean;
+  stressLevel: (value: number) => boolean;
+};
+
+// コンポーネントプロパティ
 export interface ButtonProps {
-  variant?: 'primary' | 'secondary' | 'ghost' | 'success' | 'danger';
-  size?: 'sm' | 'md' | 'lg' | 'xl';
+  variant?: 'primary' | 'secondary' | 'ghost' | 'icon';
+  size?: 'sm' | 'md' | 'lg';
   loading?: boolean;
   disabled?: boolean;
   fullWidth?: boolean;
@@ -168,52 +289,57 @@ export interface ButtonProps {
 }
 
 export interface CardProps {
-  variant?: 'default' | 'netflix' | 'uber' | 'glass';
-  padding?: 'none' | 'sm' | 'md' | 'lg';
-  hover?: boolean;
+  variant?: 'default' | 'hover' | 'gradient';
   className?: string;
   children: React.ReactNode;
   onClick?: () => void;
 }
 
-export interface ProgressIndicatorProps {
-  current: number;
-  total: number;
-  showPercentage?: boolean;
-  color?: 'primary' | 'success' | 'hope';
-  size?: 'sm' | 'md' | 'lg';
+export interface ProgressBarProps {
+  value: number;
+  max?: number;
+  className?: string;
   animated?: boolean;
 }
 
-// Animation Types
-export interface AnimationVariants {
-  initial: Record<string, any>;
-  animate: Record<string, any>;
-  exit?: Record<string, any>;
-  transition?: Record<string, any>;
+// アニメーション
+export interface PageTransition {
+  initial: { opacity: number };
+  animate: { opacity: number };
+  transition: { duration: number };
 }
 
-// Color Psychology Types
-export interface ColorPsychology {
-  primary: string; // trust, professionalism
-  accent: string; // hope, energy
-  success: string; // growth, achievement
-  calm: string; // relaxation, peace
-  hope: string; // optimism, confidence
-  energy: string; // motivation, action
+export interface CardAppearance {
+  initial: { opacity: number; y: number };
+  animate: { opacity: number; y: number };
+  transition: { 
+    duration: number;
+    stagger?: number;
+  };
 }
 
-// Mobile Optimization Types
-export interface TouchGesture {
-  type: 'tap' | 'swipe' | 'pinch' | 'long-press';
-  direction?: 'up' | 'down' | 'left' | 'right';
-  handler: (event: any) => void;
-}
+// アイコンマッピング
+export type IconName = 
+  | 'Sparkles'
+  | 'ChevronRight' 
+  | 'GraduationCap'
+  | 'Briefcase'
+  | 'UserCheck'
+  | 'Heart'
+  | 'Target'
+  | 'TrendingUp'
+  | 'Brain'
+  | 'Camera'
+  | 'Send'
+  | 'RefreshCw'
+  | 'CheckCircle'
+  | 'Award'
+  | 'Smile'
+  | 'Frown'
+  | 'Check';
 
-export interface ResponsiveBreakpoint {
-  mobile: boolean;
-  tablet: boolean;
-  desktop: boolean;
-  width: number;
-  height: number;
-}
+// ユーティリティ型
+export type RequiredFields<T, K extends keyof T> = Omit<T, K> & Required<Pick<T, K>>;
+
+// React.FC型のエイリアス
+export type FC<P = {}> = React.FC<P>;

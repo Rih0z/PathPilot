@@ -61,30 +61,42 @@
 
 /* Component styles inspired by Netflix/Uber design systems */
 @layer components {
-  /* Button variants based on psychological triggers */
+  /* Button variants - PathPilot UI/UX仕様書準拠 */
   .btn-primary {
-    @apply bg-primary-600 hover:bg-primary-700 active:bg-primary-800 text-white px-6 py-3 rounded-xl font-medium transition-all duration-200 shadow-medium hover:shadow-large transform hover:-translate-y-0.5 active:translate-y-0 focus:ring-primary-500;
+    @apply bg-gradient-to-r from-amber-400 to-orange-500 text-white font-bold rounded-full px-6 py-3 transition-all duration-300 hover:shadow-lg transform hover:-translate-y-0.5 active:scale-95;
+  }
+  
+  .btn-primary-large {
+    @apply bg-gradient-to-r from-amber-400 to-orange-500 text-white font-bold rounded-full px-8 py-4 text-lg transition-all duration-300 hover:shadow-lg transform hover:-translate-y-0.5 active:scale-95;
   }
   
   .btn-secondary {
-    @apply bg-accent-500 hover:bg-accent-600 active:bg-accent-700 text-white px-6 py-3 rounded-xl font-medium transition-all duration-200 shadow-medium hover:shadow-large transform hover:-translate-y-0.5 active:translate-y-0 focus:ring-accent-500;
+    @apply px-6 py-3 bg-gray-200 text-gray-700 rounded-full font-semibold hover:bg-gray-300 transition-all;
   }
   
-  .btn-ghost {
-    @apply bg-transparent hover:bg-neutral-100 active:bg-neutral-200 text-neutral-700 hover:text-neutral-900 px-6 py-3 rounded-xl font-medium transition-all duration-200 focus:ring-neutral-500;
+  .btn-secondary-white {
+    @apply bg-white/20 backdrop-blur-sm px-4 py-2 rounded-full flex items-center hover:bg-white/30 transition-all;
   }
   
-  .btn-success {
-    @apply bg-success-500 hover:bg-success-600 active:bg-success-700 text-white px-6 py-3 rounded-xl font-medium transition-all duration-200 shadow-medium hover:shadow-large transform hover:-translate-y-0.5 active:translate-y-0 focus:ring-success-500;
+  .btn-icon {
+    @apply p-2 hover:bg-gray-100 rounded-lg transition-all;
   }
   
   .btn-primary-glow {
     @apply bg-gradient-to-r from-primary-600 to-accent-500 hover:from-primary-700 hover:to-accent-600 text-white px-8 py-4 rounded-2xl font-semibold text-lg transition-all duration-300 shadow-large hover:shadow-glow transform hover:-translate-y-1 hover:scale-105 active:translate-y-0 active:scale-100 focus:ring-accent-500;
   }
   
-  /* Card components */
+  /* Card components - PathPilot UI/UX仕様書準拠 */
   .card {
-    @apply bg-white rounded-2xl shadow-soft hover:shadow-medium transition-all duration-300 border border-neutral-200/50;
+    @apply bg-white/90 backdrop-blur-sm rounded-3xl p-8 shadow-xl;
+  }
+  
+  .card-hover {
+    @apply bg-white/90 backdrop-blur-sm rounded-3xl p-8 shadow-lg hover:shadow-2xl transform hover:-translate-y-2 transition-all duration-300;
+  }
+  
+  .card-gradient {
+    @apply bg-gradient-to-r from-amber-100 to-orange-100 rounded-3xl p-6;
   }
   
   .card-netflix {
@@ -108,22 +120,42 @@
     @apply w-6 h-6 bg-primary-500 rounded-full cursor-pointer border-0 shadow-medium hover:shadow-large transition-all duration-200;
   }
   
-  /* Input styles with psychological comfort */
+  /* Input styles - PathPilot UI/UX仕様書準拠 */
   .input-field {
-    @apply w-full px-4 py-3 bg-white border border-neutral-200 rounded-xl text-neutral-900 placeholder-neutral-500 focus:border-primary-500 focus:ring-primary-500 transition-colors duration-200;
+    @apply w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all;
   }
   
   .input-field-large {
     @apply w-full px-6 py-4 bg-white border border-neutral-200 rounded-2xl text-lg text-neutral-900 placeholder-neutral-500 focus:border-primary-500 focus:ring-primary-500 transition-colors duration-200;
   }
   
-  /* Progress indicators for psychological momentum */
+  .textarea-field {
+    @apply w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all resize-none;
+  }
+  
+  /* Progress indicators - PathPilot UI/UX仕様書準拠 */
   .progress-bar {
-    @apply w-full bg-neutral-200 rounded-full h-2 overflow-hidden;
+    @apply bg-white/20 rounded-full h-6 overflow-hidden;
   }
   
   .progress-fill {
-    @apply h-full bg-gradient-to-r from-primary-500 to-accent-500 rounded-full transition-all duration-500 ease-out;
+    @apply bg-gradient-to-r from-amber-400 to-orange-500 h-full transition-all duration-1000;
+  }
+  
+  .stage-progress {
+    @apply flex space-x-1;
+  }
+  
+  .stage-indicator {
+    @apply w-8 h-2 rounded-full;
+  }
+  
+  .stage-active {
+    @apply bg-blue-500;
+  }
+  
+  .stage-inactive {
+    @apply bg-gray-200;
   }
   
   /* Glass morphism effect */
@@ -215,9 +247,29 @@
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
   }
   
-  /* Gradient utilities */
+  /* Gradient utilities - PathPilot UI/UX仕様書準拠 */
+  .bg-gradient-main {
+    background: linear-gradient(to bottom right, #f8fafc, #dbeafe);
+  }
+  
   .bg-gradient-primary {
-    background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%);
+    background: linear-gradient(to right, #fbbf24, #f97316);
+  }
+  
+  .bg-gradient-hero {
+    background: linear-gradient(to right, #3b82f6, #9333ea);
+  }
+  
+  .bg-gradient-student {
+    background: linear-gradient(to right, #3b82f6, #06b6d4);
+  }
+  
+  .bg-gradient-newgrad {
+    background: linear-gradient(to right, #a855f7, #ec4899);
+  }
+  
+  .bg-gradient-career {
+    background: linear-gradient(to right, #f97316, #ef4444);
   }
   
   .bg-gradient-radial {
