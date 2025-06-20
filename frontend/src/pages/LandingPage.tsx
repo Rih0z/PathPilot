@@ -3,44 +3,8 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronRight, Star, Users, TrendingUp, Shield, Sparkles, Target, Heart, ArrowRight } from 'lucide-react';
 import { animationUtils, psychologyUtils, responsiveUtils, cn } from '@/utils';
 
-// Hero section with psychological hooks
+// Hero section
 const HeroSection: React.FC = () => {
-  const [activeTestimonial, setActiveTestimonial] = useState(0);
-  
-  const testimonials = [
-    {
-      name: "田中 美咲さん",
-      role: "ITエンジニア転職成功",
-      company: "某大手IT企業",
-      message: "3ヶ月で年収400万→650万にアップ！PathPilotのAIアドバイスが的確すぎて驚きました",
-      rating: 5,
-      image: "👩‍💻"
-    },
-    {
-      name: "佐藤 健太さん", 
-      role: "新卒就活成功",
-      company: "大手商社",
-      message: "就活の不安が希望に変わりました。AIが私だけの成功パターンを見つけてくれた",
-      rating: 5,
-      image: "👨‍💼"
-    },
-    {
-      name: "山田 あやさん",
-      role: "キャリアチェンジ成功", 
-      company: "スタートアップCMO",
-      message: "未経験からマーケ職へ転職。PathPilotなしでは無理でした",
-      rating: 5,
-      image: "👩‍🎨"
-    }
-  ];
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setActiveTestimonial((prev) => (prev + 1) % testimonials.length);
-    }, 4000);
-    return () => clearInterval(interval);
-  }, []);
-
   return (
     <section className="relative min-h-screen bg-gradient-to-br from-primary-950 via-primary-900 to-primary-800 overflow-hidden">
       {/* Background Effects */}
@@ -57,15 +21,15 @@ const HeroSection: React.FC = () => {
             className="text-center lg:text-left"
             {...animationUtils.entrance.fadeInUp}
           >
-            {/* Social Proof Badge */}
+            {/* Product Status Badge */}
             <motion.div 
               className="inline-flex items-center bg-white/10 backdrop-blur-sm border border-white/20 rounded-full px-4 py-2 text-white/90 text-sm mb-8"
               {...animationUtils.entrance.scaleIn}
               transition={{ delay: 0.2 }}
             >
-              <Star className="w-4 h-4 text-hope mr-2 fill-current" />
-              <span>2万人以上が就活成功を実現</span>
-              <Sparkles className="w-4 h-4 text-hope ml-2" />
+              <Sparkles className="w-4 h-4 text-hope mr-2" />
+              <span>AI就活サポートツール（開発中）</span>
+              <Star className="w-4 h-4 text-hope ml-2" />
             </motion.div>
 
             {/* Main Headline */}
@@ -91,33 +55,6 @@ const HeroSection: React.FC = () => {
               具体的な希望体験をお届けします
             </motion.p>
 
-            {/* Key Stats */}
-            <motion.div 
-              className="grid grid-cols-3 gap-4 mb-8"
-              variants={animationUtils.stagger.container}
-              initial="initial"
-              animate="animate"
-              transition={{ delay: 0.5 }}
-            >
-              {[
-                { label: "平均内定期間", value: "3.2ヶ月", icon: Target },
-                { label: "成功率", value: "94.5%", icon: TrendingUp },
-                { label: "満足度", value: "98%", icon: Heart }
-              ].map((stat, index) => (
-                <motion.div 
-                  key={stat.label}
-                  variants={animationUtils.stagger.item}
-                  className="text-center"
-                >
-                  <div className="w-12 h-12 bg-white/10 rounded-xl flex items-center justify-center mx-auto mb-2">
-                    <stat.icon className="w-6 h-6 text-accent-400" />
-                  </div>
-                  <div className="text-2xl font-bold text-white">{stat.value}</div>
-                  <div className="text-sm text-white/60">{stat.label}</div>
-                </motion.div>
-              ))}
-            </motion.div>
-
             {/* CTA Buttons */}
             <motion.div 
               className="flex flex-col sm:flex-row gap-4"
@@ -130,7 +67,7 @@ const HeroSection: React.FC = () => {
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
-                <span>無料で希望体験を始める</span>
+                <span>デモを体験する</span>
                 <ArrowRight className="w-5 h-5" />
               </motion.a>
               
@@ -138,77 +75,50 @@ const HeroSection: React.FC = () => {
                 className="bg-white/10 border border-white/30 text-white px-8 py-4 rounded-2xl hover:bg-white/20 transition-colors duration-200 flex items-center justify-center space-x-2"
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
+                onClick={() => {
+                  const features = document.querySelector('#features');
+                  features?.scrollIntoView({ behavior: 'smooth' });
+                }}
               >
-                <span>2分で分かる紹介動画</span>
+                <span>機能を詳しく見る</span>
                 <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832L14 10.202a1 1 0 000-1.664l-4.445-2.37z" clipRule="evenodd" />
+                  <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
                 </svg>
               </motion.button>
             </motion.div>
           </motion.div>
 
-          {/* Right: Testimonial Carousel */}
+          {/* Right: Product Preview */}
           <motion.div 
             className="relative"
             {...animationUtils.entrance.slideInRight}
             transition={{ delay: 0.4 }}
           >
             <div className="relative bg-white/10 backdrop-blur-xl border border-white/20 rounded-3xl p-8 max-w-lg mx-auto">
-              <AnimatePresence mode="wait">
-                <motion.div
-                  key={activeTestimonial}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -20 }}
-                  transition={{ duration: 0.5 }}
-                  className="text-center"
-                >
-                  {/* User Avatar */}
-                  <div className="w-16 h-16 bg-gradient-to-br from-accent-400 to-hope rounded-full flex items-center justify-center text-2xl mx-auto mb-4">
-                    {testimonials[activeTestimonial].image}
-                  </div>
+              <div className="text-center">
+                {/* Product Icon */}
+                <div className="w-16 h-16 bg-gradient-to-br from-accent-400 to-hope rounded-full flex items-center justify-center text-2xl mx-auto mb-4">
+                  🎯
+                </div>
 
-                  {/* Rating */}
-                  <div className="flex justify-center space-x-1 mb-4">
-                    {[...Array(5)].map((_, i) => (
-                      <Star key={i} className="w-5 h-5 text-hope fill-current" />
-                    ))}
-                  </div>
+                {/* Product Description */}
+                <h3 className="text-2xl font-bold text-white mb-4">
+                  PathPilot
+                </h3>
+                <p className="text-white/80 text-lg mb-6 leading-relaxed">
+                  AI技術を活用した就活サポートプラットフォーム。あなたの状況に合わせたパーソナライズされたアドバイスとガイダンスを提供します。
+                </p>
 
-                  {/* Message */}
-                  <p className="text-white text-lg mb-6 leading-relaxed">
-                    "{testimonials[activeTestimonial].message}"
+                {/* Development Status */}
+                <div className="bg-white/10 border border-white/20 rounded-xl p-4">
+                  <div className="flex items-center justify-center space-x-2 text-accent-300">
+                    <div className="w-2 h-2 bg-accent-400 rounded-full animate-pulse"></div>
+                    <span className="text-sm font-medium">現在開発中</span>
+                  </div>
+                  <p className="text-white/70 text-sm mt-2">
+                    デモ版で基本機能をお試しいただけます
                   </p>
-
-                  {/* User Info */}
-                  <div className="text-white/80">
-                    <div className="font-semibold text-white">
-                      {testimonials[activeTestimonial].name}
-                    </div>
-                    <div className="text-sm">
-                      {testimonials[activeTestimonial].role}
-                    </div>
-                    <div className="text-sm text-accent-300">
-                      {testimonials[activeTestimonial].company}
-                    </div>
-                  </div>
-                </motion.div>
-              </AnimatePresence>
-
-              {/* Carousel Indicators */}
-              <div className="flex justify-center space-x-2 mt-6">
-                {testimonials.map((_, index) => (
-                  <button
-                    key={index}
-                    onClick={() => setActiveTestimonial(index)}
-                    className={cn(
-                      "w-3 h-3 rounded-full transition-all duration-300",
-                      activeTestimonial === index
-                        ? "bg-accent-400 scale-125"
-                        : "bg-white/30 hover:bg-white/50"
-                    )}
-                  />
-                ))}
+                </div>
               </div>
             </div>
           </motion.div>
@@ -228,41 +138,41 @@ const HeroSection: React.FC = () => {
   );
 };
 
-// Features section with psychological benefits
+// Features section
 const FeaturesSection: React.FC = () => {
   const features = [
     {
       icon: "🎯",
       title: "パーソナライズドAI",
-      description: "あなたの状況、性格、目標を分析して、完全カスタマイズされたアドバイスを提供",
+      description: "あなたの状況、性格、目標を分析して、カスタマイズされたアドバイスを提供",
       benefit: "迷いがなくなり、確信を持って行動できる",
       color: "from-primary-500 to-primary-600"
     },
     {
       icon: "✨",
       title: "希望体験生成",
-      description: "成功した人の実例をもとに、あなたの未来の希望的な体験を具体的に描写",
+      description: "成功パターンをもとに、あなたの未来の希望的な体験を具体的に描写",
       benefit: "不安が希望に変わり、モチベーションが続く",
       color: "from-accent-500 to-accent-600"
     },
     {
       icon: "📊",
       title: "成功パターン分析",
-      description: "2万人の成功データから、あなたと似た状況の人の成功パターンを発見",
+      description: "様々な成功事例から、あなたと似た状況の人の成功パターンを発見",
       benefit: "何をすべきかが明確になり、迷わず行動できる",
       color: "from-success-500 to-success-600"
     },
     {
       icon: "🚀",
       title: "ステップバイステップ",
-      description: "内定まで毎日やるべきことを具体的に指示。進捗に応じて戦略も調整",
+      description: "目標達成まで毎日やるべきことを具体的に指示。進捗に応じて戦略も調整",
       benefit: "圧倒される感覚がなくなり、着実に前進できる",
       color: "from-hope to-accent-400"
     }
   ];
 
   return (
-    <section className="py-20 bg-neutral-50">
+    <section id="features" className="py-20 bg-neutral-50">
       <div className="container mx-auto px-4">
         {/* Section Header */}
         <motion.div 
@@ -337,42 +247,39 @@ const FeaturesSection: React.FC = () => {
   );
 };
 
-// Social proof section
-const SocialProofSection: React.FC = () => {
-  const stats = [
-    { number: "20,000+", label: "累計利用者数", description: "多くの方が成功を実現" },
-    { number: "94.5%", label: "内定成功率", description: "圧倒的な結果の実績" },
-    { number: "3.2ヶ月", label: "平均内定期間", description: "効率的な就活が可能" },
-    { number: "98%", label: "利用者満足度", description: "信頼できるサービス品質" }
-  ];
-
+// About section
+const AboutSection: React.FC = () => {
   return (
     <section className="py-16 bg-gradient-to-r from-primary-900 to-primary-800">
       <div className="container mx-auto px-4">
         <motion.div 
-          className="grid grid-cols-2 lg:grid-cols-4 gap-8"
-          variants={animationUtils.stagger.container}
-          initial="initial"
-          whileInView="animate"
-          viewport={{ once: true }}
+          className="text-center max-w-4xl mx-auto"
+          {...animationUtils.entrance.fadeInUp}
         >
-          {stats.map((stat, index) => (
-            <motion.div
-              key={stat.label}
-              variants={animationUtils.stagger.item}
-              className="text-center"
-            >
-              <div className="text-4xl lg:text-5xl font-bold text-white mb-2">
-                {stat.number}
-              </div>
-              <div className="text-accent-300 font-semibold mb-1">
-                {stat.label}
-              </div>
-              <div className="text-white/70 text-sm">
-                {stat.description}
-              </div>
-            </motion.div>
-          ))}
+          <h2 className="text-3xl lg:text-4xl font-bold text-white mb-6">
+            PathPilotについて
+          </h2>
+          <div className="text-lg text-white/90 leading-relaxed space-y-4">
+            <p>
+              PathPilotは、AI技術を活用して就職活動をサポートするプラットフォームです。
+              現在開発中のプロダクトで、心理学的アプローチとデータ分析を組み合わせ、
+              ユーザーに最適化されたキャリアガイダンスを提供することを目指しています。
+            </p>
+            <p>
+              デモ版では基本機能をお試しいただけます。
+              フィードバックや改善提案をお待ちしております。
+            </p>
+          </div>
+          
+          <div className="mt-8 p-6 bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl">
+            <div className="flex items-center justify-center space-x-2 text-accent-300 mb-2">
+              <div className="w-3 h-3 bg-accent-400 rounded-full animate-pulse"></div>
+              <span className="font-semibold">開発ステータス</span>
+            </div>
+            <p className="text-white/80 text-sm">
+              現在アルファ版として開発中です。基本機能のデモをご利用いただけます。
+            </p>
+          </div>
         </motion.div>
       </div>
     </section>
@@ -389,13 +296,13 @@ const CTASection: React.FC = () => {
           {...animationUtils.entrance.fadeInUp}
         >
           <h2 className="text-4xl lg:text-5xl font-bold text-white mb-6">
-            今すぐ始めて、
+            今すぐデモを体験して、
             <br className="sm:hidden" />
-            明日から変わる就活を
+            新しい就活の可能性を
           </h2>
           <p className="text-xl text-white/90 mb-8 leading-relaxed">
-            無料で始められます。クレジットカード不要。<br className="hidden sm:block" />
-            3分で設定完了、すぐにあなた専用の希望体験をお届けします。
+            無料でデモをお試しいただけます。<br className="hidden sm:block" />
+            3分で設定完了、すぐにパーソナライズされた体験をお届けします。
           </p>
 
           <motion.a
@@ -405,12 +312,12 @@ const CTASection: React.FC = () => {
             whileTap={{ scale: 0.95 }}
           >
             <Sparkles className="w-6 h-6" />
-            <span>無料で希望体験を始める</span>
+            <span>デモを体験する</span>
             <ChevronRight className="w-6 h-6" />
           </motion.a>
 
           <div className="mt-6 text-white/80 text-sm">
-            すでに今日 <span className="font-semibold text-white">247人</span> が新しい希望を見つけました
+            開発中のプロダクトです。フィードバックをお聞かせください
           </div>
         </motion.div>
       </div>
@@ -424,7 +331,7 @@ const LandingPage: React.FC = () => {
     <div className="min-h-screen">
       <HeroSection />
       <FeaturesSection />
-      <SocialProofSection />
+      <AboutSection />
       <CTASection />
     </div>
   );
