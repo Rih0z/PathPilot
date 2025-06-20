@@ -43,3 +43,8 @@ wrangler-*.log
 
 # Testing
 vitest.config.ts.timestamp-*.mjs
+test-results/
+playwright-report/
+frontend/test-results/
+frontend/playwright-report/
+frontend/coverage/
