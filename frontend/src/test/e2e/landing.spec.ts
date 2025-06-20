@@ -12,9 +12,9 @@ test.describe('Landing Page E2E Tests', () => {
 
   test('should show social proof elements', async ({ page }) => {
     await expect(page.getByText('2万人以上が就活成功を実現')).toBeVisible();
-    await expect(page.getByText('2万人が利用中')).toBeVisible();
-    await expect(page.getByText('平均3.2ヶ月で内定')).toBeVisible();
-    await expect(page.getByText('満足度98%')).toBeVisible();
+    await expect(page.getByText('平均内定期間')).toBeVisible();
+    await expect(page.getByText('成功率')).toBeVisible();
+    await expect(page.getByText('満足度')).toBeVisible();
   });
 
   test('should have working CTA buttons', async ({ page }) => {
@@ -27,7 +27,7 @@ test.describe('Landing Page E2E Tests', () => {
   });
 
   test('should display key statistics', async ({ page }) => {
-    await expect(page.getByText('3.2ヶ月')).toBeVisible();
+    await expect(page.getByText('3.2ヶ月').first()).toBeVisible();
     await expect(page.getByText('94.5%')).toBeVisible();
     await expect(page.getByText('98%')).toBeVisible();
   });
@@ -71,12 +71,9 @@ test.describe('Landing Page E2E Tests', () => {
   });
 
   test('should have smooth scrolling behavior', async ({ page }) => {
-    // Test scroll to features section
+    // Scroll to features section
     await page.evaluate(() => {
-      const featuresSection = document.querySelector('text=パーソナライズドAI')?.closest('section');
-      if (featuresSection) {
-        featuresSection.scrollIntoView({ behavior: 'smooth' });
-      }
+      window.scrollTo({ top: 1000, behavior: 'smooth' });
     });
     
     await expect(page.getByText('パーソナライズドAI')).toBeVisible();

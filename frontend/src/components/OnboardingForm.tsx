@@ -79,8 +79,12 @@ const OnboardingForm: React.FC<OnboardingFormProps> = ({
   // フォーム送信ハンドラー
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    console.log('Form submitted', { isValid, userContext });
     if (validateForm()) {
+      console.log('Validation passed, calling onComplete');
       onComplete();
+    } else {
+      console.log('Validation failed');
     }
   };
 
@@ -98,7 +102,21 @@ const OnboardingForm: React.FC<OnboardingFormProps> = ({
                          userContext.graduationYear.trim() !== '';
     }
     
-    setIsValid(commonValid && typeSpecificValid);
+    const formValid = commonValid && typeSpecificValid;
+    console.log('Validation check:', {
+      userType,
+      commonValid,
+      typeSpecificValid,
+      formValid,
+      targetJob: userContext.targetJob,
+      university: userContext.university,
+      major: userContext.major,
+      graduationYear: userContext.graduationYear,
+      currentJob: userContext.currentJob,
+      experience: userContext.experience
+    });
+    
+    setIsValid(formValid);
   }, [userType, userContext]);
 
   // ストレスレベルのテキスト取得
@@ -361,6 +379,13 @@ const OnboardingForm: React.FC<OnboardingFormProps> = ({
           <button
             type="submit"
             disabled={!isValid}
+            onClick={(e) => {
+              console.log('Button clicked', { isValid, disabled: !isValid });
+              if (!isValid) {
+                e.preventDefault();
+                console.log('Button is disabled, preventing submit');
+              }
+            }}
             className={`w-full px-8 py-4 rounded-full font-bold text-lg transition-all duration-300 ${
               isValid
                 ? 'bg-gradient-to-r from-amber-400 to-orange-500 text-white hover:shadow-lg transform hover:-translate-y-0.5'

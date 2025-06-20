@@ -410,21 +410,21 @@ export const DataImportPage: React.FC<DataImportPageProps> = ({ onBack, onImport
           </div>
 
           {/* AI分析結果 */}
-          {parsedData.analysis && (
+          {(parsedData as any).analysis && (
             <div className="bg-gradient-to-r from-purple-50 to-blue-50 p-6 rounded-xl border">
               <h3 className="font-bold text-blue-900 mb-4">AI分析結果</h3>
               <div className="space-y-3 text-sm">
                 <div>
                   <span className="text-gray-600">マッチング度:</span>
-                  <span className="ml-2 font-medium text-lg">{parsedData.analysis.matchingScore}%</span>
+                  <span className="ml-2 font-medium text-lg">{(parsedData as any).analysis.matchingScore}%</span>
                 </div>
                 <div>
                   <span className="text-gray-600">強み:</span>
-                  <span className="ml-2 font-medium">{parsedData.analysis.strengths.join(', ')}</span>
+                  <span className="ml-2 font-medium">{(parsedData as any).analysis.strengths.join(', ')}</span>
                 </div>
                 <div>
                   <span className="text-gray-600">改善エリア:</span>
-                  <span className="ml-2 font-medium">{parsedData.analysis.improvementAreas.join(', ')}</span>
+                  <span className="ml-2 font-medium">{(parsedData as any).analysis.improvementAreas.join(', ')}</span>
                 </div>
               </div>
             </div>
